@@ -283,10 +283,10 @@
 		use_list_view = yes
 		undisturbed_isolation = {
 
-
 			allowed = {
 				always = no
 			}
+			level = 7
 			removal_cost = -1
 
 			modifier = {
@@ -317,7 +317,7 @@
 		}
 
 		isolation = {
-
+			level = 6
 
 
 			allowed = {
@@ -351,7 +351,7 @@
 		}
 
 		civilian_economy = {
-
+			level = 5
 
 			cost = 150
 			removal_cost = -1
@@ -372,6 +372,7 @@
 		}
 
 		low_economic_mobilisation = {
+			level = 4
 
 			available = {
 				has_war_support > 0.15
@@ -405,6 +406,7 @@
 		}
 
 		partial_economic_mobilisation = {
+			level = 3
 
 			available = {
 				has_war_support > 0.25
@@ -434,7 +436,7 @@
 		}
 
 		war_economy = {
-
+			level = 2
 
 			available = {
 				has_war_support > 0.5
@@ -486,7 +488,7 @@
 		}
 
 		tot_economic_mobilisation = {
-
+			level = 1
 
 			available = {
 				has_war = yes
@@ -546,7 +548,7 @@
 		use_list_view = yes
 
 		free_trade = {
-
+			level = 4
 			cost = 150
 			removal_cost = -1
 
@@ -564,7 +566,7 @@
 		}
 
 		export_focus = {
-
+			level = 3
 
 			cost = 150
 			removal_cost = -1
@@ -585,7 +587,7 @@
 		}
 
 		limited_exports = {
-
+			level = 2
 
 			available = {
 				# set in code to account for the existence of democratic ideology
@@ -636,7 +638,7 @@
 		}
 
 		closed_economy = {
-
+			level = 1
 
 			available = {
 				has_war = yes
