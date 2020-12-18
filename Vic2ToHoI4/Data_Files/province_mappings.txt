@@ -1539,7 +1539,7 @@
 	link = { vic2 = 296 hoi4 = 3369 hoi4 = 6378 }	# Bristol -> land, land
 	link = { vic2 = 297 hoi4 = 3422 }	# Salisbury -> land
 	link = { vic2 = 298 hoi4 = 6351 hoi4 = 9484 }	# Bath -> land, land
-	link = { vic2 = 299 vic2 = 419 hoi4 = 540 hoi4 = 6526 hoi4 = 11406 hoi4 = 9562 hoi4 = 3463 }	# MANY-TO-MANY: Plymouth, Channel Islands -> land, land, land, land, land
+	link = { vic2 = 299 hoi4 = 540 hoi4 = 6526 hoi4 = 11406 hoi4 = 9562 hoi4 = 3463 }	# MANY-TO-MANY: Plymouth, Channel Islands -> land, land, land, land, land
 	link = { comment = "# # Eastern Country" }
 	link = { vic2 = 291 hoi4 = 11221 hoi4 = 296 }	# Cambridge -> land, land
 	link = { vic2 = 292 hoi4 = 221 hoi4 = 271 hoi4 = 322 hoi4 = 3287 }	# Ipswich -> land, land, land, land
@@ -1589,7 +1589,7 @@
 	link = { vic2 = 415 hoi4 = 11563 hoi4 = 9434 hoi4 = 485 }	# Rouen -> land, land, land
 	link = { vic2 = 416 hoi4 = 3549 hoi4 = 9578 hoi4 = 6569 }	# Évreux -> land, land, land
 	link = { vic2 = 417 hoi4 = 11521 hoi4 = 539 hoi4 = 553 }	# Alençon -> land, land, land
-	link = { vic2 = 418 hoi4 = 11535 hoi4 = 3579 hoi4 = 9550 hoi4 = 6449 hoi4 = 6599 }	# Caen -> land, land, land, land, land
+	link = { vic2 = 418 vic2 = 419 hoi4 = 11535 hoi4 = 3579 hoi4 = 9550 hoi4 = 6449 hoi4 = 6599 }	# Caen -> land, land, land, land, land
 	link = { comment = "# # Loire" }
 	link = { vic2 = 434 hoi4 = 9478 hoi4 = 11613 hoi4 = 3659 hoi4 = 9867 hoi4 = 503 }	# Angers -> land, land, land, land, land
 	link = { vic2 = 435 hoi4 = 3495 hoi4 = 3523 }	# Laval -> land, land
@@ -3575,7 +3575,7 @@
 	link = { comment = "# # New South Wales" }
 	link = { vic2 = 2468 hoi4 = 12406 hoi4 = 4864 }	# Sydney -> land, land
 	link = { vic2 = 2469 hoi4 = 7520 hoi4 = 10388 }	# Newcastle -> land, land
-	link = { vic2 = 2470 vic2 = 2508 hoi4 = 1611 hoi4 = 10458 hoi4 = 10500 hoi4 = 7664 hoi4 = 7496 hoi4 = 7450 }	# MANY-TO-MANY: Port Macquarie, Norfolk Island -> land, land, land, land, land, land
+	link = { vic2 = 2470 hoi4 = 1611 hoi4 = 10458 hoi4 = 10500 hoi4 = 7664 hoi4 = 7496 hoi4 = 7450 }	# MANY-TO-MANY: Port Macquarie, Norfolk Island -> land, land, land, land, land, land
 	link = { vic2 = 2471 hoi4 = 10427 hoi4 = 1537 hoi4 = 12435 }	# Ophir -> land, land, land
 	link = { vic2 = 2472 hoi4 = 12560 hoi4 = 4673 hoi4 = 7859 hoi4 = 1861 hoi4 = 12532 hoi4 = 4763 }	# Eden -> land, land, land, land, land, land
 	link = { vic2 = 2473 hoi4 = 10682 hoi4 = 4836 hoi4 = 10455 hoi4 = 1667 hoi4 = 11019 hoi4 = 5134 hoi4 = 5161 hoi4 = 2146 }	# Wagga Wagga -> land, land, land, land, land, land, land, land
@@ -3592,7 +3592,7 @@
 	link = { comment = "# " }
 	link = { comment = "# ## New Zealand" }
 	link = { comment = "# # North Island" }
-	link = { vic2 = 2509 hoi4 = 4543 hoi4 = 10334 hoi4 = 4615 hoi4 = 10373 }	# Auckland -> land, land, land, land
+	link = { vic2 = 2509 vic2 = 2508 hoi4 = 4543 hoi4 = 10334 hoi4 = 4615 hoi4 = 10373 }	# Auckland -> land, land, land, land
 	link = { vic2 = 2510 hoi4 = 12604 hoi4 = 7783 hoi4 = 1713 hoi4 = 12617 }	# New Plymouth -> land, land, land, land
 	link = { vic2 = 2511 hoi4 = 1801 hoi4 = 10609 hoi4 = 10710 hoi4 = 4748 hoi4 = 7742 }	# Napier -> land, land, land, land, land
 	link = { vic2 = 2512 hoi4 = 1814 hoi4 = 7826 hoi4 = 4804 hoi4 = 7692 hoi4 = 1786 }	# Wellington -> land, land, land, land, land
