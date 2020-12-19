@@ -1,6 +1,7 @@
-BasedOnStyle: Google
 Language: Cpp
 
-TabWidth: 3
-UseTab: Always
+DerivePointerAlignment: false
+PointerAlignment: Left
+IndentWidth: 8
+BreakBeforeBraces: Allman
 
