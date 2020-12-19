@@ -17,10 +17,16 @@ HoI4::ImpassableProvinces::ImpassableProvinces(const std::map<int, DefaultState>
 			}
 		}
 	}
+	komsOverrides = std::unordered_set<int>{
+		 1958, 10838, 1115, 5004,
+	};
 }
 
 
 bool HoI4::ImpassableProvinces::isProvinceImpassable(const int provinceNumber) const
 {
-	return impassibleProvinces.contains(provinceNumber);
+  if (komsOverrides.contains(provinceNumber)) {
+	 return true;
+  }
+  return impassibleProvinces.contains(provinceNumber);
 }

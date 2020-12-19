@@ -21,6 +21,7 @@ class ImpassableProvinces
 
   private:
 	std::unordered_set<int> impassibleProvinces;
+	std::unordered_set<int> komsOverrides;
 };
 
 } // namespace HoI4
