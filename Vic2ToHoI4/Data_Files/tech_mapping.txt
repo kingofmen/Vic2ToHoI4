@@ -46,26 +46,28 @@ tech_map =
 
 	# HoI4 Infantry Equipment I <- Vic2 Invention Army/Light Armament/Modern Divisional Structure/Interwar Cavalry
 	link = {
-		vic2 = interwar_cavalry
+		vic2 = light_armament_7
 		hoi4 = infantry_weapons1
+	}
+	link = {
+		vic2 = army_leadership_7
 		hoi4 = tech_recon
 	}
 
 	# HoI4 Support Weapons I <- Vic2 Invention Army/Light Armament/Modern Divisional Structure/Interwar Infantry
 	link = {
-		vic2 = interwar_infantry
+		vic2 = heavy_armament_7
 		hoi4 = support_weapons
-		hoi4 = tech_engineers
 	}
 
 	# HoI4 Marines I <- Vic2 Invention Navy/Naval Leadership/Modern Naval Training/Amphibious Warfare Training
 	link = {
-		vic2 = amphibious_warfare_training
+		vic2 = ocean_acoustics
 		hoi4 = marines
 	}
 
 	link = {
-		vic2 = armoured_cars
+		vic2 = tech_infrastructure_7
 		hoi4 = motorised_infantry
 	}
 
@@ -75,20 +77,14 @@ tech_map =
 
 	# HoI4 Great War Tank <- Vic2 Invention Army/Army Doctrine/Infiltration/Tank Experiments
 	link = {
-		vic2 = tank_exploits
+		vic2 = mechanization_7
 		hoi4 = gwtank
 	}
 
 	# HoI4 Light Tank I <- Vic2 Invention Army/Heavy Armament/Heavy Armament/Tankette
 	link = {
-		vic2 = tankette
+		vic2 = philosophy_7
 		hoi4 = basic_light_tank
-	}
-
-	# HoI4 Light Tank II <- Vic2 Invention Army/Heavy Armament/Heavy Armament/Light Tank
-	link = {
-		vic2 = light_tank
-		hoi4 = improved_light_tank
 	}
 
 	# =============================
@@ -97,12 +93,12 @@ tech_map =
 
 	# HoI4 Interwar Artillery <- Vic2 Invention Army/Heavy Armament/Heavy Armament/Heavy Artillery
 	link = {
-		vic2 = heavy_artillery
+		vic2 = military_science_7
 		hoi4 = interwar_artillery
 	}
 
 	link = {
-		vic2 = improved_anti_aircraft_artillery
+		vic2 = social_thought_7
 		hoi4 = interwar_antiair
 	}
 
@@ -112,13 +108,13 @@ tech_map =
 
 	# HoI4 Fighter I <- Vic2 Invention Army/Military Science/Aeronautics/Late Interwar Fighters
 	link = {
-		vic2 = late_interwar_fighters
+		vic2 = political_thought_7
 		hoi4 = fighter1
 	}
 
 	# HoI4 Tactical Bomber I <- Vic2 Invention Army/Military Science/Aeronautics/Late Interwar Bombers
 	link = {
-		vic2 = late_interwar_bombers
+		vic2 = tech_organization_7
 		hoi4 = tactical_bomber1
 	}
 
@@ -128,7 +124,7 @@ tech_map =
 
 	# HoI4 Electronic Mechanical Engineering <- Vic2 Vacuum Tube Invention
 	link = {
-		vic2 = vacuum_tube
+		vic2 = chemistry_and_electricity_7
 		hoi4 = electronic_mechanical_engineering
 	}
 
@@ -138,12 +134,12 @@ tech_map =
 
 	# HoI4 Synthetic Oil Experiments <- Vic2 Synthetic Polymers
 	link = {
-		vic2 = synthetic_polymers
+		vic2 = market_functionality_7
 		hoi4 = synth_oil_experiments
 	}
 
 	link = {
-		vic2 = cracking
+		vic2 = financial_institutions_7
 		hoi4 = fuel_silos
 		hoi4 = fuel_refining
 	}
@@ -223,14 +219,14 @@ mtg_naval_tech_map =
 
 	# HoI4 1936 Destroyer Hull/Basic Depth Charges <- Vic2 Invention Navy/Ship Construction/Oil Driven Ships/Advanced Cruisers
 	link = {
-		vic2 = advanced_cruisers
+		vic2 = tech_power_7
 		hoi4 = basic_ship_hull_light
 		hoi4 = basic_depth_charges
 	}
 
 	# HoI4 Sonar <- Vic2 Invention Navy/Naval Engineering/Modern Naval Design/Advanced Fire Control
 	link = {
-		vic2 = advanced_fire_control
+		vic2 = economic_thought_and_critique_7
 		hoi4 = sonar
 		hoi4 = basic_light_battery
 		hoi4 = basic_secondary_battery
@@ -238,63 +234,39 @@ mtg_naval_tech_map =
 
 	# HoI4 1936 Cruiser Hull/Basic Cruiser Armor Scheme <- Vic2 Invention Navy/Ship Construction/Oil Driven Ships/Modern Cruisers
 	link = {
-		vic2 = modern_cruisers
+		vic2 = metallurgy_7
 		hoi4 = basic_ship_hull_cruiser
 		hoi4 = basic_cruiser_armor_scheme
 	}
 
 	# HoI4 Early Heavy Ship Hull <- Vic2 Invention Navy/Ship Construction/Steam Turbine Ships/Dreadnoughts
 	link = {
-		vic2 = dreadnoughts
+		vic2 = psychology_7
 		hoi4 = early_ship_hull_heavy
 	}
 
 	# HoI4 Inclined Belt Armor Scheme <- Vic2 Invention Navy/Ship Construction/Oil Driven Ships/Advanced Battleships
 	link = {
-		vic2 = advanced_battleships
+		vic2 = monetary_system_7
 		hoi4 = basic_heavy_armor_scheme
 	}
 
 	# HoI4 1936 Heavy Ship Hull <- Vic2 Invention Navy/Ship Construction/Oil Driven Ships/Modern Battleships
 	link = {
-		vic2 = modern_battleships
+		vic2 = aesthetics_7
 		hoi4 = basic_ship_hull_heavy
 	}
 
 	# HoI4 Early Submarine Hull/Minelaying Submarine <- Vic2 Tech Navy/Ship Construction/Oil Driven Ships
 	link = {
-		vic2 = oil_driven_ships
+		vic2 = ocean_going_subs
 		hoi4 = early_ship_hull_submarine
 		hoi4 = submarine_mine_laying
 	}
 
-	# HoI4 Early Submarine Hull <- Vic2 Tech Navy/Ship Construction/Steam Turbine Ships
-	link = {
-		vic2 = steam_turbine_ships
-		hoi4 = basic_ship_hull_submarine
-	}
-
-	# HoI4 1936 Submarine Hull <- Vic2 Tech Navy/Ship Construction/Oil Driven Ships
-	link = {
-		vic2 = oil_driven_ships
-		hoi4 = early_ship_hull_submarine
-	}
-
-	# HoI4 Basic Medium Battery <- Vic2 Invention Navy/Naval Doctrine/Modern Naval Doctrine/Naval Firepower Doctrine
-	link = {
-		vic2 = naval_firepower_doctrine
-		hoi4 = basic_medium_battery
-	}
-
-	# HoI4 Basic Heavy Battery <- Vic2 Invention Navy/Naval Engineering/Modern Naval Design/15-inch Main Armament
-	link = {
-		vic2 = 15_inch_main_armament
-		hoi4 = basic_heavy_battery
-	}
-
 	# HoI4 Transports <- Vic2 Invention Navy/Naval Engineering/Modern Naval Design/15-inch Main Armament
 	link = {
-		vic2 = amphibious_warfare_training
+		vic2 = anti_sub_doctrines
 		hoi4 = mtg_transport
 	}
 }
@@ -307,8 +279,7 @@ bonus_map =
 	# =================================
 
 	link = {
-		vic2 = human_wave_vs_spearhead
-		vic2 = grand_battle_plan_vs_superior_firepower
+		vic2 = army_doctrine_7
 		land_doctrine = 90
 	}
 
@@ -317,9 +288,7 @@ bonus_map =
 	# ================================
 
 	link = {
-		vic2 = battlefield_destruction_doctrine
-		vic2 = operational_destruction_doctrine
-		vic2 = strategic_destruction_doctrine
+		vic2 = interwar_carriers
 		air_doctrine = 90
 	}
 
@@ -328,7 +297,7 @@ bonus_map =
 	# ==================================
 
 	link = {
-		vic2 = naval_firepower_doctrine
+		vic2 = naval_great_war_analysis
 		naval_doctrine = 90
 	}
 }
