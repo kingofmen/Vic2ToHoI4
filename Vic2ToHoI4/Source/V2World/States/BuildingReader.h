@@ -4,7 +4,7 @@
 
 
 #include "Parser.h"
-
+#include <string>
 
 
 namespace Vic2
@@ -16,9 +16,11 @@ class BuildingReader: commonItems::parser
 	BuildingReader();
 
 	int getLevel(std::istream& theStream);
+        const std::string& ersatz() const { return ersatzType; }
 
   private:
 	int level = 0;
+        std::string ersatzType;
 };
 
 } // namespace Vic2

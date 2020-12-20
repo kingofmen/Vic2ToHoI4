@@ -13,7 +13,12 @@ Vic2::State::Factory::Factory()
 		state->provinceNumbers.insert(provinces.begin(), provinces.end());
 	});
 	registerKeyword("state_buildings", [this](const std::string& unused, std::istream& theStream) {
-		state->factoryLevel += buildingReader.getLevel(theStream);
+            int level = buildingReader.getLevel(theStream);
+            const auto& ersatz = buildingReader.ersatz();
+            if (ersatz != "") {
+              state->addErsatz(ersatz, level);
+            }
+            state->factoryLevel += level;
 	});
 	registerRegex(commonItems::catchallRegex, commonItems::ignoreItem);
 }

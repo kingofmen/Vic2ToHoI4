@@ -26,6 +26,13 @@ HoI4::State::State(const Vic2::State& sourceState, int _ID, const std::string& _
 		infrastructure = 0;
 	}
 	addInfrastructureFromRails(sourceState.getAverageRailLevel());
+        for (const auto& extra : sourceState.getExtraResources()) {
+                addResource(extra.first, extra.second);
+                Log(LogLevel::Info)
+                    << "Adding " << extra.second << " " << extra.first
+                    << " to state " << ID << " owned by " << ownerTag << " ("
+                    << sourceState.getOwner() << ")";
+        }
 }
 
 

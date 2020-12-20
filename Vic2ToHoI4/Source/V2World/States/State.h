@@ -36,7 +36,12 @@ class State
 	void setOwner(std::string newOwner) { owner = std::move(newOwner); }
 	void setLanguageCategory(std::string newLanguageCategory) { languageCategory = std::move(newLanguageCategory); }
 
-	[[nodiscard]] int getPopulation() const;
+	void addErsatz(const std::string& type, int level);
+        const std::unordered_map<std::string, int>& getExtraResources() const
+        {
+                return extraResources;
+        }
+        [[nodiscard]] int getPopulation() const;
 	[[nodiscard]] float getAverageRailLevel() const;
 	[[nodiscard]] std::optional<int> getUpperClassLocation() const;
 	[[nodiscard]] std::vector<int> getProvincesOrderedByPopulation() const;
@@ -54,7 +59,7 @@ class State
 
   private:
 	[[nodiscard]] workerStruct countEmployedWorkers() const;
-	[[nodiscard]] workerStruct limitWorkersByFactoryLevels(const workerStruct& workers) const;
+	[[nodiscard]] workerStruct limitWorkersByFactoryLevels(const workerStruct& workers);
 	[[nodiscard]] static int determineEmployedWorkersScore(const workerStruct& workers);
 
 	std::string owner;
@@ -69,6 +74,8 @@ class State
 
 	int factoryLevel = 0;
 	int employedWorkers = 0;
+	std::unordered_map<std::string, int> ersatzLevels;
+        std::unordered_map<std::string, int> extraResources;
 };
 
 } // namespace Vic2

@@ -28,23 +28,51 @@ Vic2::workerStruct Vic2::State::countEmployedWorkers() const
 	return workers;
 }
 
-
 constexpr float WORKERS_PER_FACTORY_LEVEL = 10000.0F;
-Vic2::workerStruct Vic2::State::limitWorkersByFactoryLevels(const workerStruct& workers) const
+Vic2::workerStruct Vic2::State::limitWorkersByFactoryLevels(const workerStruct& workers)
 {
-	if ((workers.craftsmen + workers.clerks) <= (static_cast<float>(factoryLevel) * 10000.0F))
+        static std::unordered_map<std::string, std::string> ersatzMapping = {
+            {"ersatz_rubber_factory", "rubber"},
+            {"ersatz_iron_factory", "steel"},
+            {"charcoal_factory", "oil"},
+            {"ersatz_timber_factory", "aluminium"},
+            {"ersatz_sulphur_factory", "tungsten"},
+        };
+        float ersatzWorkers = 0;
+        int actualFactoryLevel = factoryLevel;
+        for (const auto& ersatz : ersatzLevels)
+        {
+                actualFactoryLevel -= ersatz.second;
+                std::string type = ersatz.first;
+                float level = (float) ersatz.second;
+                level /= factoryLevel;
+                level *= workers.craftsmen;
+                ersatzWorkers += level;
+                level /= WORKERS_PER_FACTORY_LEVEL;
+                int resource = (int)(level + 0.5);
+                if (resource > 0) {
+                        extraResources[ersatzMapping[type]] = resource;
+                }
+        }
+        auto newWorkers = workers;
+        newWorkers.craftsmen -= ersatzWorkers;
+        float total = newWorkers.craftsmen + newWorkers.clerks;
+        if (total > (static_cast<float>(actualFactoryLevel) * 10000.0F))
 	{
-		return workers;
-	}
+                newWorkers.craftsmen *= actualFactoryLevel;
+                newWorkers.craftsmen *= WORKERS_PER_FACTORY_LEVEL;
+                newWorkers.craftsmen /= total;
+                newWorkers.clerks *= actualFactoryLevel;
+                newWorkers.clerks *= WORKERS_PER_FACTORY_LEVEL;
+                newWorkers.clerks /= total;
+        }
 
-	auto newWorkers = workers;
-	newWorkers.craftsmen = (static_cast<float>(factoryLevel) * WORKERS_PER_FACTORY_LEVEL) /
-								  (workers.craftsmen + workers.clerks) * workers.craftsmen;
-	newWorkers.clerks = (static_cast<float>(factoryLevel) * WORKERS_PER_FACTORY_LEVEL) /
-							  (workers.craftsmen + workers.clerks) * workers.clerks;
 	return newWorkers;
 }
 
+void Vic2::State::addErsatz(const std::string& type, int level) {
+  ersatzLevels[type] += level;
+}
 
 int Vic2::State::determineEmployedWorkersScore(const workerStruct& workers)
 {
