@@ -17,9 +17,9 @@ HoI4::ImpassableProvinces::ImpassableProvinces(const std::map<int, DefaultState>
 			}
 		}
 	}
-	komsOverrides = std::unordered_set<int>{
-		 1958, 10838, 1115, 5004,
-	};
+        komsOverrides = std::unordered_set<int>{
+            1958, 10838, 1115, 5004, 10725, 10884, 8128, 1956,
+        };
 }
 
 
