@@ -26,7 +26,7 @@ HoI4::ImpassableProvinces::ImpassableProvinces(const std::map<int, DefaultState>
 bool HoI4::ImpassableProvinces::isProvinceImpassable(const int provinceNumber) const
 {
   if (komsOverrides.contains(provinceNumber)) {
-	 return true;
+	 return false;
   }
   return impassibleProvinces.contains(provinceNumber);
 }
