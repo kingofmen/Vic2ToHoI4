@@ -35,6 +35,7 @@ tech_map =
 		vic2 = flintlock_rifles
 		hoi4 = infantry_weapons
 		hoi4 = gw_artillery
+		hoi4 = gwtank
 		hoi4 = tech_support
 		hoi4 = early_fighter
 		hoi4 = early_bomber
@@ -75,16 +76,14 @@ tech_map =
 	# === HOI4 ARMOR FOLDER ===
 	# =========================
 
-	# HoI4 Great War Tank <- Vic2 Invention Army/Army Doctrine/Infiltration/Tank Experiments
+	link = {
+		vic2 = modern_army_doctrine
+		hoi4 = basic_light_tank
+		hoi4 = basic_heavy_tank
+	}
 	link = {
 		vic2 = mechanization_7
-		hoi4 = gwtank
-	}
-
-	# HoI4 Light Tank I <- Vic2 Invention Army/Heavy Armament/Heavy Armament/Tankette
-	link = {
-		vic2 = philosophy_7
-		hoi4 = basic_light_tank
+		hoi4 = improved_light_tank
 	}
 
 	# =============================
@@ -117,6 +116,10 @@ tech_map =
 		vic2 = tech_organization_7
 		hoi4 = tactical_bomber1
 	}
+	link = {
+		vic2 = financial_institutions_7
+		hoi4 = basic_machine_tools
+	}
 
 	# ===============================
 	# === HOI4 ENGINEERING FOLDER ===
@@ -124,7 +127,7 @@ tech_map =
 
 	# HoI4 Electronic Mechanical Engineering <- Vic2 Vacuum Tube Invention
 	link = {
-		vic2 = chemistry_and_electricity_7
+		vic2 = philosophy_7
 		hoi4 = electronic_mechanical_engineering
 	}
 
@@ -139,7 +142,7 @@ tech_map =
 	}
 
 	link = {
-		vic2 = financial_institutions_7
+		vic2 = chemistry_and_electricity_7
 		hoi4 = fuel_silos
 		hoi4 = fuel_refining
 	}
