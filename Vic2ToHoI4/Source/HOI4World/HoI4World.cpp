@@ -408,13 +408,33 @@ map<string, double> HoI4::World::calculateFactoryWorkerRatios(const Configuratio
 
 map<string, double> HoI4::World::getIndustrialWorkersPerCountry()
 {
-	map<string, double> industrialWorkersPerCountry;
+        // Use Victoria tags.
+        static std::unordered_map<string, double> buffFactors = {
+          {"X00", 1.25}, // Noobgorod.
+          {"X01", 1.00}, // Thuringia.
+          {"X02", 1.00}, // Ar-Adunaim.
+          {"BRT", 1.25}, // Brittany.
+          {"X04", 1.25}, // Grand Sicily.
+          {"X05", 1.00}, // Tyrannia.
+          {"FLA", 1.00}, // Flanders.
+          {"GEO", 1.00}, // Georgia.
+          {"ENG", 1.00}, // England.
+          {"EGY", 1.00}, // Egypt.
+          {"YMN", 1.00}, // Japan.
+        };
+        map<string, double> industrialWorkersPerCountry;
 	for (auto country: landedCountries)
 	{
 		const auto& employedWorkers = country.second->getEmployedWorkers();
+                auto buff = buffFactors[country.second->getOldTag()];
+                if (buff < 0.01) {
+                        // Default for AI countries.
+                        buff = 2;
+                }
+                //buff = 1;
 		if (employedWorkers > 0)
 		{
-			industrialWorkersPerCountry.insert(make_pair(country.first, employedWorkers));
+			industrialWorkersPerCountry.insert(make_pair(country.first, employedWorkers * buff));
 		}
 	}
 
@@ -490,20 +510,50 @@ void HoI4::World::calculateIndustryInCountries()
 
 void HoI4::World::reportIndustryLevels() const
 {
-	auto militaryFactories = 0;
-	auto civilianFactories = 0;
-	auto dockyards = 0;
-	for (const auto& state: states->getStates())
-	{
-		militaryFactories += state.second.getMilFactories();
-		civilianFactories += state.second.getCivFactories();
-		dockyards += state.second.getDockyards();
-	}
+        struct facs
+        {
+                int mils;
+                int civs;
+                int doks;
+        };
+        std::unordered_map<std::string, facs> countryFacs;
+        facs total = {0, 0, 0};
+        for (const auto& state : states->getStates())
+        {
+                facs curr = {state.second.getMilFactories(),
+                             state.second.getCivFactories(),
+                             state.second.getDockyards()};
+                total.mils += curr.mils;
+                total.civs += curr.civs;
+                total.doks += curr.doks;
+                auto& owner = countryFacs[state.second.getOwner()];
+                owner.mils += curr.mils;
+                owner.civs += curr.civs;
+                owner.doks += curr.doks;
+        }
 
-	Log(LogLevel::Info) << "\tTotal factories: " << militaryFactories + civilianFactories + dockyards;
-	Log(LogLevel::Info) << "\t\t" << militaryFactories << " military factories";
-	Log(LogLevel::Info) << "\t\t" << civilianFactories << " civilian factories";
-	Log(LogLevel::Info) << "\t\t" << dockyards << " dockyards";
+        Log(LogLevel::Info)
+            << "\tTotal factories: " << total.mils + total.civs + total.doks;
+        Log(LogLevel::Info) << "\t\t" << total.mils << " military factories";
+        Log(LogLevel::Info) << "\t\t" << total.civs << " civilian factories";
+        Log(LogLevel::Info) << "\t\t" << total.doks << " dockyards";
+
+        for (const auto& country : countryFacs)
+        {
+                const auto& tag = country.first;
+                const auto& fac = country.second;
+                int total = fac.mils + fac.civs + fac.doks;
+                if (total < 10)
+                {
+                        continue;
+                }
+                const auto& oldTag = countries.at(tag)->getOldTag();
+                char buf[256];
+                sprintf(buf, "%3d | %3d | %3d | %3d", total, fac.mils, fac.doks,
+                        fac.civs);
+                LOG(LogLevel::Info)
+                    << "\t" << tag << "(" << oldTag << "): " << buf;
+        }
 }
 
 

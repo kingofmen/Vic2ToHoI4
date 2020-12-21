@@ -408,48 +408,46 @@ void HoI4::State::setIndustry(int factories, const CoastalProvinces& theCoastalP
 		factories /= 2;
 	}
 
+        struct facs {
+                double mil;
+                double civ;
+                double dok;
+        };
+        static std::unordered_map<std::string, facs> accumulator;
+        if (accumulator.find(ownerTag) == accumulator.end()) {
+          accumulator[ownerTag] = {0, 0, 0};
+        }
+        auto& curr = accumulator[ownerTag];
 	if (amICoastal(theCoastalProvinces))
 	{
-		// distribute military factories, civilian factories, and dockyards using unseeded random
 		//		20% chance of dockyard
 		//		57% chance of civilian factory
 		//		23% chance of military factory
-		for (int i = 0; i < factories; i++)
-		{
-			double randomNum = numberDistributor(randomnessEngine);
-			if (randomNum > 76)
-			{
-				milFactories++;
-			}
-			else if (randomNum > 19)
-			{
-				civFactories++;
-			}
-			else
-			{
-				dockyards++;
-			}
-		}
+                curr.mil += 0.23 * factories;
+                curr.civ += 0.57 * factories;
+                curr.dok += 0.20 * factories;
 	}
 	else
 	{
-		// distribute military factories, civilian factories, and dockyards using unseeded random
 		//		 0% chance of dockyard
 		//		71% chance of civilian factory
 		//		29% chance of military factory
-		for (int i = 0; i < factories; i++)
-		{
-			double randomNum = numberDistributor(randomnessEngine);
-			if (randomNum > 70)
-			{
-				milFactories++;
-			}
-			else
-			{
-				civFactories++;
-			}
-		}
+                curr.mil += 0.29 * factories;
+                curr.civ += 0.71 * factories;
 	}
+
+        while (curr.mil >= 1.0) {
+                milFactories++;
+                curr.mil -= 1.0;
+        }
+        while (curr.civ >= 1.0) {
+                civFactories++;
+                curr.civ -= 1.0;
+        }
+        while (curr.dok >= 1.0) {
+                dockyards++;
+                curr.dok -= 1.0;
+        }
 }
 
 
