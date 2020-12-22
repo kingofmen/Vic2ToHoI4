@@ -483,11 +483,9 @@ shared_focus = {
 
 	completion_reward = {
 		add_ideas = ideological_fanaticism_focus
+		add_stability = 0.05
 		set_rule = {
 			can_create_factions = yes
-		}
-		hidden_effect = {
-			set_rule = { can_use_kamikaze_pilots = yes }
 		}
 		custom_effect_tooltip = kamikaze_focus_tooltip
 	}
