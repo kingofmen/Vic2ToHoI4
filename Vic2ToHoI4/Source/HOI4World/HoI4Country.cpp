@@ -799,11 +799,17 @@ void HoI4::Country::convertArmies(const militaryMappings& theMilitaryMappings,
 	 const mappers::ProvinceMapper& provinceMapper,
 	 const Configuration& theConfiguration)
 {
-	if (capitalProvince)
+        double forceMultiplier = theConfiguration.getForceMultiplier();
+        if (oldTag == "CSH") {
+          // Drastically increase Shun's army to make the Chinese civil war
+          // last more than three weeks.
+          forceMultiplier *= 50;
+        }
+        if (capitalProvince)
 	{
 		theArmy.convertArmies(theMilitaryMappings,
 			 *capitalProvince,
-			 theConfiguration.getForceMultiplier(),
+                         forceMultiplier,
 			 *theTechnologies,
 			 theStates,
 			 provinceMapper);
@@ -812,7 +818,7 @@ void HoI4::Country::convertArmies(const militaryMappings& theMilitaryMappings,
 	{
 		theArmy.convertArmies(theMilitaryMappings,
 			 0,
-			 theConfiguration.getForceMultiplier(),
+                         forceMultiplier,
 			 *theTechnologies,
 			 theStates,
 			 provinceMapper);

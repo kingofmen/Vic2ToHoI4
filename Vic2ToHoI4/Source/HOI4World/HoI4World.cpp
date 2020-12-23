@@ -421,6 +421,8 @@ map<string, double> HoI4::World::getIndustrialWorkersPerCountry()
           {"ENG", 1.00}, // England.
           {"EGY", 1.00}, // Egypt.
           {"YMN", 1.00}, // Japan.
+          {"CSH", 3.00}, // Shun for extra civil-war flavour.
+          {"CDL", 3.00}, // Dali likewise.
         };
         map<string, double> industrialWorkersPerCountry;
 	for (auto country: landedCountries)
@@ -549,8 +551,8 @@ void HoI4::World::reportIndustryLevels() const
                 }
                 const auto& oldTag = countries.at(tag)->getOldTag();
                 char buf[256];
-                sprintf(buf, "%3d | %3d | %3d | %3d", total, fac.mils, fac.doks,
-                        fac.civs);
+                sprintf_s(buf, 256, "%3d | %3d | %3d | %3d", total, fac.mils,
+                          fac.doks, fac.civs);
                 LOG(LogLevel::Info)
                     << "\t" << tag << "(" << oldTag << "): " << buf;
         }
@@ -924,7 +926,7 @@ void HoI4::World::addFocusTrees()
 	{
 		if (country.second->isGreatPower() || (country.second->getStrengthOverTime(3) > 4500))
 		{
-			country.second->addGenericFocusTree(ideologies->getMajorIdeologies());
+                        country.second->addGenericFocusTree(ideologies->getMajorIdeologies());
 		}
 	}
 }
