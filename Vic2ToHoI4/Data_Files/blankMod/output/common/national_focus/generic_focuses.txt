@@ -930,10 +930,10 @@ shared_focus = {
 	}
 
 	complete_tooltip = {
-		add_extra_state_shared_building_slots = 1
+		add_extra_state_shared_building_slots = 2
 		add_building_construction = {
 			type = industrial_complex
-			level = 1
+			level = 2
 			instant_build = yes
 		}			
 	}
@@ -962,10 +962,10 @@ shared_focus = {
 					}
 				}
 			}
-			add_extra_state_shared_building_slots = 1
+			add_extra_state_shared_building_slots = 2
 			add_building_construction = {
 				type = industrial_complex
-				level = 1
+				level = 2
 				instant_build = yes
 			}
 		}
@@ -1002,10 +1002,10 @@ shared_focus = {
 	}
 
 	complete_tooltip = {
-		add_extra_state_shared_building_slots = 1
+		add_extra_state_shared_building_slots = 2
 		add_building_construction = {
 			type = arms_factory
-			level = 1
+			level = 2
 			instant_build = yes
 		}
 	}
@@ -1034,10 +1034,10 @@ shared_focus = {
 					}
 				}
 			}
-			add_extra_state_shared_building_slots = 1
+			add_extra_state_shared_building_slots = 2
 			add_building_construction = {
 				type = arms_factory
-				level = 1
+				level = 2
 				instant_build = yes
 			}
 		}
@@ -1074,10 +1074,10 @@ shared_focus = {
 	}
 
 	complete_tooltip = {
-		add_extra_state_shared_building_slots = 1
+		add_extra_state_shared_building_slots = 2
 		add_building_construction = {
 			type = industrial_complex
-			level = 1
+			level = 2
 			instant_build = yes
 		}
 	}		
@@ -1106,10 +1106,10 @@ shared_focus = {
 					}
 				}
 			}
-			add_extra_state_shared_building_slots = 1
+			add_extra_state_shared_building_slots = 2
 			add_building_construction = {
 				type = industrial_complex
-				level = 1
+				level = 2
 				instant_build = yes
 			}
 		}
@@ -1146,10 +1146,10 @@ shared_focus = {
 	}
 
 	complete_tooltip = {
-		add_extra_state_shared_building_slots = 1
+		add_extra_state_shared_building_slots = 2
 		add_building_construction = {
 			type = arms_factory
-			level = 1
+			level = 2
 			instant_build = yes
 		}
 	}		
@@ -1178,10 +1178,10 @@ shared_focus = {
 					}
 				}
 			}
-			add_extra_state_shared_building_slots = 1
+			add_extra_state_shared_building_slots = 2
 			add_building_construction = {
 				type = arms_factory
-				level = 1
+				level = 2
 				instant_build = yes
 			}
 		}
@@ -1312,10 +1312,10 @@ shared_focus = {
 	}
 
 	complete_tooltip = {
-		add_extra_state_shared_building_slots = 1
+		add_extra_state_shared_building_slots = 2
 		add_building_construction = {
 			type = arms_factory
-			level = 1
+			level = 2
 			instant_build = yes
 		}
 	}		
@@ -1344,10 +1344,10 @@ shared_focus = {
 					}
 				}
 			}
-			add_extra_state_shared_building_slots = 1
+			add_extra_state_shared_building_slots = 2
 			add_building_construction = {
 				type = arms_factory
-				level = 1
+				level = 2
 				instant_build = yes
 			}
 		}
@@ -1478,10 +1478,10 @@ shared_focus = {
 	}
 
 	complete_tooltip = {
-		add_extra_state_shared_building_slots = 2
+		add_extra_state_shared_building_slots = 3
 		add_building_construction = {
 			type = industrial_complex
-			level = 2
+			level = 3
 			instant_build = yes
 		}
 	}
@@ -1510,10 +1510,10 @@ shared_focus = {
 					}
 				}
 			}
-			add_extra_state_shared_building_slots = 2
+			add_extra_state_shared_building_slots = 3
 			add_building_construction = {
 				type = industrial_complex
-				level = 2
+				level = 3
 				instant_build = yes
 			}
 		}
