@@ -1052,7 +1052,9 @@ vector<shared_ptr<HoI4::Faction>> HoI4WarCreator::fascistWarMaker(shared_ptr<HoI
 
 	FocusTree->addGPWarBranch(Leader, newAllies, GCTargets, "Fascist", theWorld->getEvents(), hoi4Localisations);
 
-	Leader->giveNationalFocus(FocusTree);
+        Log(LogLevel::Info) << "Fascist focus tree for " << Leader->getTag()
+                            << " (" << Leader->getOldTag() << ")";
+        Leader->giveNationalFocus(FocusTree);
 	return CountriesAtWar;
 }
 
@@ -1248,6 +1250,8 @@ vector<shared_ptr<HoI4::Faction>> HoI4WarCreator::communistWarCreator(shared_ptr
 	FocusTree->addCommunistWarBranch(Leader, TargetsByTech, theWorld->getEvents(), hoi4Localisations);
 	FocusTree->addGPWarBranch(Leader, newAllies, finalTargets, "Communist", theWorld->getEvents(), hoi4Localisations);
 	Leader->giveNationalFocus(FocusTree);
+        Log(LogLevel::Info) << "Communist focus tree for " << Leader->getTag()
+                            << " (" << Leader->getOldTag() << ")";
 
 	return CountriesAtWar;
 }
@@ -1284,6 +1288,8 @@ vector<shared_ptr<HoI4::Faction>> HoI4WarCreator::democracyWarCreator(shared_ptr
 	}
 
 	Leader->giveNationalFocus(FocusTree);
+        Log(LogLevel::Info) << "Democratic focus tree for " << Leader->getTag()
+                            << " (" << Leader->getOldTag() << ")";
 
 	return CountriesAtWar;
 }
@@ -1315,6 +1321,8 @@ vector<shared_ptr<HoI4::Faction>> HoI4WarCreator::absolutistWarCreator(shared_pt
 	addTradeEvents(country, greatPowerTargets);
 
 	country->giveNationalFocus(focusTree);
+        Log(LogLevel::Info) << "Absolutist focus tree for " << country->getTag()
+                            << " (" << country->getOldTag() << ")";
 
 	return CountriesAtWar;
 }

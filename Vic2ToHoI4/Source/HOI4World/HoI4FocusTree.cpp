@@ -27,12 +27,12 @@ void HoI4FocusTree::addGenericFocusTree(const set<string>& majorIdeologies)
 	Log(LogLevel::Info) << "\t\tCreating generic focus tree";
 	confirmLoadedFocuses();
 
-	auto numCollectovistIdeologies = static_cast<int>(calculateNumCollectovistIdeologies(majorIdeologies));
+	auto numCollectivistIdeologies = static_cast<int>(calculateNumCollectivistIdeologies(majorIdeologies));
 
 	if (const auto& originalFocus = loadedFocuses.find("political_effort"); originalFocus != loadedFocuses.end())
 	{
 		auto newFocus = make_shared<HoI4::SharedFocus>(originalFocus->second);
-		newFocus->xPos = static_cast<int>((numCollectovistIdeologies * 1.5) + 16);
+		newFocus->xPos = static_cast<int>((numCollectivistIdeologies * 1.5) + 16);
 		sharedFocuses.push_back(newFocus);
 	}
 	else
@@ -40,7 +40,7 @@ void HoI4FocusTree::addGenericFocusTree(const set<string>& majorIdeologies)
 		throw std::runtime_error("Could not load focus political_effort");
 	}
 
-	if (numCollectovistIdeologies > 0)
+	if (numCollectivistIdeologies > 0)
 	{
 		if (const auto& originalFocus = loadedFocuses.find("collectivist_ethos"); originalFocus != loadedFocuses.end())
 		{
@@ -57,7 +57,7 @@ void HoI4FocusTree::addGenericFocusTree(const set<string>& majorIdeologies)
 			}
 			newFocus->available += "\t\t\t}\n";
 			newFocus->available += "\t\t}";
-			newFocus->xPos = -(numCollectovistIdeologies / 2) - 1;
+			newFocus->xPos = -(numCollectivistIdeologies / 2) - 1;
 			newFocus->completionReward = "= {\n";
 			if (majorIdeologies.contains("democratic"))
 			{
@@ -77,43 +77,43 @@ void HoI4FocusTree::addGenericFocusTree(const set<string>& majorIdeologies)
 
 		determineMutualExclusions(majorIdeologies);
 
-		string ideolgicalFanaticsmPrereqs;
-		int relativePosition = 1 - numCollectovistIdeologies;
+		string ideologicalFanaticismPrereqs;
+		int relativePosition = 1 - numCollectivistIdeologies;
 		if (majorIdeologies.contains("fascism"))
 		{
 			addFascistGenericFocuses(relativePosition, majorIdeologies);
-			ideolgicalFanaticsmPrereqs += " ";
-			ideolgicalFanaticsmPrereqs += "focus = paramilitarism";
+			ideologicalFanaticismPrereqs += " ";
+			ideologicalFanaticismPrereqs += "focus = paramilitarism";
 			relativePosition += 2;
 		}
 		if (majorIdeologies.contains("communism"))
 		{
 			addCommunistGenericFocuses(relativePosition);
-			if (ideolgicalFanaticsmPrereqs.size() > 0)
+			if (ideologicalFanaticismPrereqs.size() > 0)
 			{
-				ideolgicalFanaticsmPrereqs += " ";
+				ideologicalFanaticismPrereqs += " ";
 			}
-			ideolgicalFanaticsmPrereqs += "focus = political_commissars";
+			ideologicalFanaticismPrereqs += "focus = political_commissars";
 			relativePosition += 2;
 		}
 		if (majorIdeologies.contains("absolutist"))
 		{
 			addAbsolutistGenericFocuses(relativePosition);
-			if (ideolgicalFanaticsmPrereqs.size() > 0)
+			if (ideologicalFanaticismPrereqs.size() > 0)
 			{
-				ideolgicalFanaticsmPrereqs += " ";
+				ideologicalFanaticismPrereqs += " ";
 			}
-			ideolgicalFanaticsmPrereqs += "focus = historical_claims_focus";
+			ideologicalFanaticismPrereqs += "focus = historical_claims_focus";
 			relativePosition += 2;
 		}
 		if (majorIdeologies.contains("radical"))
 		{
 			addRadicalGenericFocuses(relativePosition);
-			if (ideolgicalFanaticsmPrereqs.size() > 0)
+			if (ideologicalFanaticismPrereqs.size() > 0)
 			{
-				ideolgicalFanaticsmPrereqs += " ";
+				ideologicalFanaticismPrereqs += " ";
 			}
-			ideolgicalFanaticsmPrereqs += "focus = army_provides_focus";
+			ideologicalFanaticismPrereqs += "focus = army_provides_focus";
 		}
 
 		if (const auto& originalFocus = loadedFocuses.find("ideological_fanaticism");
@@ -121,7 +121,7 @@ void HoI4FocusTree::addGenericFocusTree(const set<string>& majorIdeologies)
 		{
 			auto newFocus = make_shared<HoI4::SharedFocus>(originalFocus->second);
 			newFocus->prerequisites.clear();
-			newFocus->prerequisites.push_back("= { " + ideolgicalFanaticsmPrereqs + " }");
+			newFocus->prerequisites.push_back("= { " + ideologicalFanaticismPrereqs + " }");
 			newFocus->xPos = 0;
 			newFocus->yPos = 5;
 			newFocus->relativePositionId = "collectivist_ethos";
@@ -136,7 +136,7 @@ void HoI4FocusTree::addGenericFocusTree(const set<string>& majorIdeologies)
 	if (const auto& originalFocus = loadedFocuses.find("liberty_ethos"); originalFocus != loadedFocuses.end())
 	{
 		auto newFocus = make_shared<HoI4::SharedFocus>(originalFocus->second);
-		if (numCollectovistIdeologies == 0)
+		if (numCollectivistIdeologies == 0)
 		{
 			newFocus->mutuallyExclusive.clear();
 		}
@@ -150,7 +150,7 @@ void HoI4FocusTree::addGenericFocusTree(const set<string>& majorIdeologies)
 			newFocus->completionReward += "\tadd_ideas = liberty_ethos_focus_neutral\n";
 			newFocus->completionReward += "}";
 		}
-		newFocus->xPos = (numCollectovistIdeologies + 1) / 2;
+		newFocus->xPos = (numCollectivistIdeologies + 1) / 2;
 		newFocus->aiWillDo = "= {\n";
 		newFocus->aiWillDo += "\t\t\tfactor = 95\n";
 		newFocus->aiWillDo += "\t\t\tmodifier = {\n";
@@ -260,12 +260,12 @@ void HoI4FocusTree::addGenericFocusTree(const set<string>& majorIdeologies)
 	if (const auto& originalFocus = loadedFocuses.find("technology_sharing"); originalFocus != loadedFocuses.end())
 	{
 		auto newFocus = make_shared<HoI4::SharedFocus>(originalFocus->second);
-		if (numCollectovistIdeologies == 0)
+		if (numCollectivistIdeologies == 0)
 		{
 			newFocus->prerequisites.clear();
 			newFocus->prerequisites.push_back("= { focus = why_we_fight }");
 		}
-		newFocus->xPos = numCollectovistIdeologies;
+		newFocus->xPos = numCollectivistIdeologies;
 		sharedFocuses.push_back(newFocus);
 	}
 	else
@@ -273,7 +273,7 @@ void HoI4FocusTree::addGenericFocusTree(const set<string>& majorIdeologies)
 		throw std::runtime_error("Could not load focus technology_sharing");
 	}
 
-	nextFreeColumn = static_cast<int>(numCollectovistIdeologies * 1.5) + ((numCollectovistIdeologies + 1) / 2) + 20;
+	nextFreeColumn = static_cast<int>(numCollectivistIdeologies * 1.5) + ((numCollectivistIdeologies + 1) / 2) + 20;
 }
 
 
@@ -301,14 +301,14 @@ void HoI4FocusTree::confirmLoadedFocuses()
 }
 
 
-size_t HoI4FocusTree::calculateNumCollectovistIdeologies(const set<string>& majorIdeologies)
+size_t HoI4FocusTree::calculateNumCollectivistIdeologies(const set<string>& majorIdeologies)
 {
-	size_t numCollectovistIdeologies = 0;
-	numCollectovistIdeologies += majorIdeologies.count("radical");
-	numCollectovistIdeologies += majorIdeologies.count("absolutist");
-	numCollectovistIdeologies += majorIdeologies.count("communism");
-	numCollectovistIdeologies += majorIdeologies.count("fascism");
-	return numCollectovistIdeologies;
+	size_t numCollectivistIdeologies = 0;
+	numCollectivistIdeologies += majorIdeologies.count("radical");
+	numCollectivistIdeologies += majorIdeologies.count("absolutist");
+	numCollectivistIdeologies += majorIdeologies.count("communism");
+	numCollectivistIdeologies += majorIdeologies.count("fascism");
+	return numCollectivistIdeologies;
 }
 
 
