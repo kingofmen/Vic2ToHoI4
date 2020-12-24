@@ -412,15 +412,15 @@ map<string, double> HoI4::World::getIndustrialWorkersPerCountry()
         static std::unordered_map<string, double> buffFactors = {
           {"X00", 1.25}, // Noobgorod.
           {"X01", 1.00}, // Thuringia.
-          {"X02", 1.00}, // Ar-Adunaim.
-          {"BRT", 1.25}, // Brittany.
-          {"X04", 1.25}, // Grand Sicily.
-          {"X05", 1.00}, // Tyrannia.
+          {"X02", 1.10}, // Ar-Adunaim.
+          {"BRT", 1.33}, // Brittany.
+          {"X04", 1.33}, // Grand Sicily.
+          {"X05", 1.10}, // Tyrannia.
           {"FLA", 1.00}, // Flanders.
-          {"GEO", 1.00}, // Georgia.
-          {"ENG", 1.00}, // England.
-          {"EGY", 1.00}, // Egypt.
-          {"YMN", 1.00}, // Japan.
+          {"GEO", 1.10}, // Georgia.
+          {"ENG", 1.10}, // England.
+          {"EGY", 1.25}, // Egypt.
+          {"YMN", 1.25}, // Japan.
           {"CSH", 3.00}, // Shun for extra civil-war flavour.
           {"CDL", 3.00}, // Dali likewise.
         };
