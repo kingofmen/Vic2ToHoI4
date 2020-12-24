@@ -214,7 +214,7 @@ void Vic2::Country::Factory::limitCommanders()
 	std::sort(generals.begin(), generals.end(), [](Leader& a, Leader& b) {
 		return a.getPrestige() > b.getPrestige();
 	});
-	const auto desiredGenerals = static_cast<int>(std::ceil(static_cast<float>(generals.size()) / 20.0F));
+	const auto desiredGenerals = static_cast<int>(std::ceil(static_cast<float>(generals.size()) / 10.0F));
 	generals.erase(generals.begin() + desiredGenerals, generals.end());
 
 	std::vector<Leader> admirals;
