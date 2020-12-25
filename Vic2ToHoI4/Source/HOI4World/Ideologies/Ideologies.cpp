@@ -23,7 +23,7 @@ HoI4::Ideologies::Ideologies(const Configuration& theConfiguration)
 	{
 		parseFile("converterIdeologies.txt");
 	}
-	parseFile(theConfiguration.getHoI4Path() + "/common/ideologies/00_ideologies.txt");
+        parseFile("blankMod/output/common/ideologies/00_ideologies.txt");
 	clearRegisteredKeywords();
 }
 
