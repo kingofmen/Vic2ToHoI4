@@ -801,9 +801,12 @@ void HoI4::Country::convertArmies(const militaryMappings& theMilitaryMappings,
 {
         double forceMultiplier = theConfiguration.getForceMultiplier();
         if (oldTag == "CSH") {
-          // Drastically increase Shun's army to make the Chinese civil war
-          // last more than three weeks.
-          forceMultiplier *= 50;
+                // Drastically increase Shun's army to make the Chinese civil
+                // war last more than three weeks.
+                forceMultiplier *= 50;
+        } else if ((oldTag == "X27") || (oldTag == "X33")) {
+                // Likewise increase Angmar and New Sassari to make them viable.
+                forceMultiplier *= 3;
         }
         if (capitalProvince)
 	{

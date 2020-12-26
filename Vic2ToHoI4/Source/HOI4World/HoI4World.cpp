@@ -150,7 +150,7 @@ HoI4::World::World(const Vic2::World* _sourceWorld,
 
 	setSphereLeaders();
 	processInfluence();
-	determineSpherelings();
+	//determineSpherelings();
 	calculateSpherelingAutonomy();
 	scriptedTriggers.importScriptedTriggers(theConfiguration);
 	updateScriptedTriggers(scriptedTriggers, ideologies->getMajorIdeologies());
@@ -423,6 +423,8 @@ map<string, double> HoI4::World::getIndustrialWorkersPerCountry()
           {"YMN", 1.25}, // Japan.
           {"CSH", 3.00}, // Shun for extra civil-war flavour.
           {"CDL", 3.00}, // Dali likewise.
+          {"X33", 10.0}, // New Sassari for player slot.
+          {"X27", 10.0}, // Angmar likewise.
         };
         map<string, double> industrialWorkersPerCountry;
 	for (auto country: landedCountries)
