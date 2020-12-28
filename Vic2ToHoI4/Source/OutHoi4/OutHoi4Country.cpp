@@ -452,15 +452,14 @@ void outputPuppets(std::ostream& output,
 				{
 					output << "    set_autonomy = {\n";
 					output << "        target = " << puppet << "\n";
-					output << "        autonomous_state = autonomy_integrated_puppet\n";
+					output << "        autonomous_state = autonomy_puppet\n";
 					output << "    }\n";
 				}
 				else
 				{
 					output << "    set_autonomy = {\n";
 					output << "        target = " << puppet << "\n";
-					output << "        autonomous_state = autonomy_dominion\n";
-					output << "        freedom_level = 0.4\n";
+					output << "        autonomous_state = autonomy_puppet\n";
 					output << "    }\n";
 				}
 			}
