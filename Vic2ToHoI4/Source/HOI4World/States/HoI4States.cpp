@@ -601,17 +601,38 @@ void HoI4::States::convertResources()
 {
 	Log(LogLevel::Info) << "\tConverting resources";
 	const Resources resourceMap;
+        std::unordered_map<std::string, int> totalResources;
+        std::unordered_map<std::string, double> totalWeights;
 
+        // Accumulate total resources and weights.
 	for (auto& state: states)
-	{
-		for (auto provinceNumber: state.second.getProvinces())
+        {
+                for (const auto& it : state.second.getWeightMap())
+                {
+                        totalWeights[it.first] += it.second;
+                }
+                for (auto provinceNumber: state.second.getProvinces())
 		{
 			for (const auto& resource: resourceMap.getResourcesInProvince(provinceNumber))
 			{
-				state.second.addResource(resource.first, resource.second);
+                               totalResources[resource.first] += resource.second;
 			}
 		}
 	}
+
+        // Now distribute them.
+	for (auto& state: states)
+        {
+                const auto& weightMap = state.second.getWeightMap();
+                for (const auto& weight : weightMap)
+                {
+                        const auto& key = weight.first;
+                        double value = weight.second;
+                        value /= totalWeights.at(key);
+                        value *= totalResources.at(key);
+                        state.second.addResource(key, value);
+                }
+        }
 }
 
 

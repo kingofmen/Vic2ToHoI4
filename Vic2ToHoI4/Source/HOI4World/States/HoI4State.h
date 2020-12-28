@@ -81,6 +81,7 @@ class State
 	int getVpValue() const { return victoryPointValue; }
 	const std::set<int>& getDebugVPs() const { return debugVictoryPoints; }
 	const std::set<int>& getSecondaryDebugVPs() const { return secondaryDebugVictoryPoints; }
+        const std::unordered_map<std::string, double>& getWeightMap() const { return weightMap; }
 
 	std::optional<int> getMainNavalLocation() const;
 	[[nodiscard]] int getManpower() const;
@@ -150,6 +151,7 @@ class State
 
 	std::map<int, int> landFortLevels;
 	std::map<int, int> coastFortLevels;
+        std::unordered_map<std::string, double> weightMap;
 };
 
 } // namespace HoI4

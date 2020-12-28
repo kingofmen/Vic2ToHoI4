@@ -5,7 +5,8 @@
 #include "V2World/Provinces/Province.h"
 #include "V2World/States/State.h"
 #include <random>
-
+#include <unordered_map>
+#include <unordered_set>
 
 
 constexpr int POP_CONVERSION_FACTOR = 4;
@@ -32,6 +33,57 @@ HoI4::State::State(const Vic2::State& sourceState, int _ID, const std::string& _
                     << "Adding " << extra.second << " " << extra.first
                     << " to state " << ID << " owned by " << ownerTag << " ("
                     << sourceState.getOwner() << ")";
+        }
+
+        // This should really be done while parsing the Victoria save,
+        // just generating a "resource in province X" map.
+        struct resource {
+          double weight;
+          std::string good;
+        };
+        static std::unordered_map<std::string, resource> resourceMap{
+            {"iron", {1.0, "steel"}},
+            {"grain", {0.1, "steel"}},
+            {"wool", {0.1, "steel"}},
+            {"fish", {0.1, "steel"}},
+            {"coal", {1.0, "aluminium"}},
+            {"fruit", {0.1, "aluminium"}},
+            {"tea", {0.2, "aluminium"}},
+            {"coffee", {0.2, "aluminium"}},
+            {"sulphur", {1.0, "chromium"}},
+            {"cotton", {0.1, "chromium"}},
+            {"timber", {1.0, "tungsten"}},
+            {"dye", {0.2, "tungsten"}},
+            {"precious_metal", {0.2, "tungsten"}},
+            {"tobacco", {0.2, "tungsten"}},
+            {"cattle", {0.1, "tungsten"}},
+            {"oil", {1.0, "oil"}},
+            {"silk", {0.2, "oil"}},
+            {"rubber", {1.0, "rubber"}},
+            {"opium", {0.2, "rubber"}},
+            {"tropical_wood", {0.2, "rubber"}},
+        };
+
+        static std::unordered_set<std::string> seen;
+        for (const auto& prov : sourceState.getProvinces())
+        {
+                const auto& rgo = prov->getRgoType();
+                if (resourceMap.find(rgo) == resourceMap.end())
+                {
+                        if (seen.find(rgo) == seen.end())
+                        {
+                                Log(LogLevel::Warning)
+                                    << "Unknown V2 resource " << rgo
+                                    << " will not map to HoI4 "
+                                       "resources.";
+                                seen.insert(rgo);
+                        }
+                        continue;
+                }
+                const auto& hoi = resourceMap.at(prov->getRgoType());
+                double amount = prov->getRgoEmployees();
+                amount *= hoi.weight;
+                weightMap[hoi.good] += amount;
         }
 }
 
