@@ -111,6 +111,19 @@ void HoI4::State::convertNavalBases(const std::map<int, int>& sourceNavalBases,
 			addNavalBase(navalBaseLevel, *navalBaseLocation);
 		}
 	}
+
+        static std::unordered_set<int> islands = {
+            6258, 9228, 13003, 13015, 3691, 722,
+        };
+
+        for (int id : islands)
+        {
+                if (provinces.find(id) == provinces.end())
+                {
+                        continue;
+                }
+                addNavalBase(1, id);
+        }
 }
 
 
