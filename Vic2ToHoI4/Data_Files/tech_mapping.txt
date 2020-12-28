@@ -211,6 +211,9 @@ mtg_naval_tech_map =
 		vic2 = flintlock_rifles
 		hoi4 = early_ship_hull_light
 		hoi4 = early_ship_hull_cruiser
+		hoi4 = early_ship_hull_heavy
+		hoi4 = early_ship_hull_carrier
+		hoi4 = early_ship_hull_submarine
 		hoi4 = basic_torpedo
 		hoi4 = basic_battery
 		hoi4 = basic_naval_mines
@@ -245,7 +248,7 @@ mtg_naval_tech_map =
 	# HoI4 Early Heavy Ship Hull <- Vic2 Invention Navy/Ship Construction/Steam Turbine Ships/Dreadnoughts
 	link = {
 		vic2 = psychology_7
-		hoi4 = early_ship_hull_heavy
+		hoi4 = basic_ship_hull_heavy
 	}
 
 	# HoI4 Inclined Belt Armor Scheme <- Vic2 Invention Navy/Ship Construction/Oil Driven Ships/Advanced Battleships
@@ -254,16 +257,15 @@ mtg_naval_tech_map =
 		hoi4 = basic_heavy_armor_scheme
 	}
 
-	# HoI4 1936 Heavy Ship Hull <- Vic2 Invention Navy/Ship Construction/Oil Driven Ships/Modern Battleships
 	link = {
-		vic2 = aesthetics_7
-		hoi4 = basic_ship_hull_heavy
+		vic2 = interwar_carriers
+		hoi4 = basic_ship_hull_cruiser
 	}
 
 	# HoI4 Early Submarine Hull/Minelaying Submarine <- Vic2 Tech Navy/Ship Construction/Oil Driven Ships
 	link = {
 		vic2 = ocean_going_subs
-		hoi4 = early_ship_hull_submarine
+		hoi4 = basic_ship_hull_submarine
 		hoi4 = submarine_mine_laying
 	}
 
@@ -291,7 +293,7 @@ bonus_map =
 	# ================================
 
 	link = {
-		vic2 = interwar_carriers
+		vic2 = aesthetics_7
 		air_doctrine = 90
 	}
 
