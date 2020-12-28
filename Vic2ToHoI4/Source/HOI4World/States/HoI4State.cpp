@@ -82,6 +82,10 @@ HoI4::State::State(const Vic2::State& sourceState, int _ID, const std::string& _
                 }
                 const auto& hoi = resourceMap.at(prov->getRgoType());
                 double amount = prov->getRgoEmployees();
+                if (amount < 1000)
+                {
+                        amount = 1000;
+                }
                 amount *= hoi.weight;
                 weightMap[hoi.good] += amount;
         }
