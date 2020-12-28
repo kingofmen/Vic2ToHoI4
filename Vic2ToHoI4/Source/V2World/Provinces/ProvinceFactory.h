@@ -12,6 +12,15 @@
 namespace Vic2
 {
 
+class RGOFactory: commonItems::parser
+{
+  public:
+        explicit RGOFactory();
+        Vic2::Province::RGO getRGO(std::istream& theStream);
+  private:
+        Province::RGO rgo;
+};
+
 class Province::Factory: commonItems::parser
 {
   public:
@@ -21,6 +30,7 @@ class Province::Factory: commonItems::parser
   private:
 	std::unique_ptr<Province> province;
 	std::unique_ptr<Pop::Factory> popFactory;
+        std::unique_ptr<RGOFactory> rgoFactory;
 };
 
 } // namespace Vic2

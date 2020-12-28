@@ -20,7 +20,12 @@ class Province
   public:
 	class Builder;
 	class Factory;
-	Province() = default;
+        struct RGO
+        {
+                std::string type;
+                int count = 0;
+        };
+        Province() = default;
 
 	[[nodiscard]] int getTotalPopulation() const;
 	[[nodiscard]] int getPopulation(const std::optional<std::string>& type = {}) const;
@@ -38,6 +43,8 @@ class Province
 	[[nodiscard]] const auto& getPops() const { return pops; }
 	[[nodiscard]] const auto& getNavalBaseLevel() const { return navalBaseLevel; }
 	[[nodiscard]] const auto& getRailLevel() const { return railLevel; }
+	[[nodiscard]] const auto& getRgoType() const { return rgo.type; }
+	[[nodiscard]] const auto& getRgoEmployees() const { return rgo.count; }
 
   private:
 	[[nodiscard]] static int calculateLiteracyWeightedPop(const Pop& thePop);
@@ -52,6 +59,7 @@ class Province
 
 	int navalBaseLevel = 0;
 	int railLevel = 0;
+        RGO rgo;
 };
 
 } // namespace Vic2
