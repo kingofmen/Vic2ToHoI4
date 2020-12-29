@@ -28,6 +28,7 @@
 constexpr int NUM_FACTORIES_PER_AIRBASE = 4;
 constexpr int AIRBASES_FOR_INFRASTRUCTURE_LEVEL = 6;
 
+std::unordered_map<std::string, int> totalNavalBases;
 
 
 HoI4::States::States(const Vic2::World* sourceWorld,
@@ -317,6 +318,12 @@ void HoI4::States::createStates(const std::map<std::string, std::unique_ptr<Vic2
 	const auto manpower = getTotalManpower();
 	Log(LogLevel::Info) << "\t\tTotal manpower was " << manpower << ", which is " << manpower / 20438756.2
 							  << "% of default HoI4.";
+
+        Log(LogLevel::Info) << "Naval strength:";
+        for (const auto& bases : totalNavalBases)
+        {
+                Log(LogLevel::Info) << bases.first << ": " << bases.second;
+        }
 }
 
 
@@ -334,7 +341,12 @@ void HoI4::States::createMatchingHoI4State(const Vic2::State& vic2State,
 	 const std::map<int, Province>& provinces,
 	 const Configuration& theConfiguration)
 {
-	const auto allProvinces = getProvincesInState(vic2State, stateOwner, provinceMapper);
+
+        for (const auto& base : vic2State.getNavalBases())
+        {
+                totalNavalBases[vic2State.getOwner()] += base.second;
+        }
+        const auto allProvinces = getProvincesInState(vic2State, stateOwner, provinceMapper);
 	const auto initialConnectedProvinceSets = getConnectedProvinceSets(allProvinces, mapData, provinces);
 	auto finalConnectedProvinceSets =
 		 consolidateProvinceSets(initialConnectedProvinceSets, strategicRegions.getProvinceToStrategicRegionMap());
