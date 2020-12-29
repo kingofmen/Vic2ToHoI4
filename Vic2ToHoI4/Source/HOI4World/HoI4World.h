@@ -161,6 +161,10 @@ class World: commonItems::parser
 		 const ProvinceDefinitions& provinceDefinitions,
 		 const mappers::ProvinceMapper& provinceMapper);
 	void convertAirforces(const UnitMappings& unitMap);
+        void komConvertNavies(const UnitMappings& unitMap,
+		 const MtgUnitMappings& mtgUnitMap,
+		 const ProvinceDefinitions& provinceDefinitions,
+		 const mappers::ProvinceMapper& provinceMapper);
 
 	void determineGreatPowers();
 

@@ -542,6 +542,23 @@ void HoI4::Country::convertTechnology(const mappers::techMapper& theTechMapper)
 	theTechnologies = HoI4::technologies(theTechMapper, oldTechnologiesAndInventions);
 }
 
+void HoI4::Country::addTech(const std::string& tech) {
+        if (!theTechnologies)
+        {
+                Log(LogLevel::Warning) << "Cannot add tech " << tech;
+                return;
+        }
+        theTechnologies->addTech(tech);
+}
+
+bool HoI4::Country::hasTechnology(const std::string& tech) const
+{
+        if (!theTechnologies)
+        {
+                return false;
+        }
+        return theTechnologies->hasTechnology(tech);
+}
 
 void HoI4::Country::setGovernmentToExistingIdeology(const std::set<std::string>& majorIdeologies,
 	 const Ideologies& ideologies,
@@ -622,13 +639,13 @@ void HoI4::Country::determineShipVariants(const PossibleShipVariants& possibleVa
 	theShipVariants = std::make_unique<ShipVariants>(possibleVariants, *theTechnologies, tag);
 }
 
-
-void HoI4::Country::convertNavies(const UnitMappings& unitMap,
-	 const MtgUnitMappings& mtgUnitMap,
-	 const std::map<int, int>& provinceToStateIDMap,
-	 const std::map<int, State>& allStates,
-	 const ProvinceDefinitions& provinceDefinitions,
-	 const mappers::ProvinceMapper& provinceMapper)
+void HoI4::Country::komvertNavies(
+    const std::vector<std::string>& toBuild, const UnitMappings& unitMap,
+    const MtgUnitMappings& mtgUnitMap,
+    const std::map<int, int>& provinceToStateIDMap,
+    const std::map<int, State>& allStates,
+    const ProvinceDefinitions& provinceDefinitions,
+    const mappers::ProvinceMapper& provinceMapper)
 {
 	auto backupNavalLocation = 0;
 	for (const auto& state: allStates)
@@ -643,8 +660,8 @@ void HoI4::Country::convertNavies(const UnitMappings& unitMap,
 			}
 		}
 	}
-
-	theNavies = std::make_unique<Navies>(oldArmies,
+        Log(LogLevel::Info) << "Creating navies for " << getOldTag();
+	theNavies = std::make_unique<Navies>(toBuild,
 		 backupNavalLocation,
 		 unitMap,
 		 mtgUnitMap,
@@ -654,8 +671,15 @@ void HoI4::Country::convertNavies(const UnitMappings& unitMap,
 		 tag,
 		 provinceDefinitions,
 		 provinceMapper);
-
-	navyNames.addLegacyShipTypeNames(LegacyShipTypeNames{"submarine", "Submarine", getShipNames("frigate")});
+        for (const auto& unit : toBuild)
+        {
+                if (unit == "frigate")
+                {
+                        // Convoys get placed in national stockpile.
+                        convoys += 12;
+                }
+        }
+        navyNames.addLegacyShipTypeNames(LegacyShipTypeNames{"submarine", "Submarine", getShipNames("frigate")});
 	navyNames.addLegacyShipTypeNames(LegacyShipTypeNames{"carrier", "Carrier", getShipNames("monitor")});
 	navyNames.addLegacyShipTypeNames(LegacyShipTypeNames{"battleship", "Battleship", getShipNames("dreadnought")});
 	navyNames.addLegacyShipTypeNames(LegacyShipTypeNames{"battle_cruiser", "Battlecruiser", getShipNames("ironclad")});
@@ -724,6 +748,110 @@ void HoI4::Country::convertNavies(const UnitMappings& unitMap,
 		 std::set<std::string>{"ship_hull_submarine submarine"},
 		 "Submarine SS-%d",
 		 getShipNames("frigate")});
+}
+
+
+void HoI4::Country::convertNavies(const UnitMappings& unitMap,
+	 const MtgUnitMappings& mtgUnitMap,
+	 const std::map<int, int>& provinceToStateIDMap,
+	 const std::map<int, State>& allStates,
+	 const ProvinceDefinitions& provinceDefinitions,
+	 const mappers::ProvinceMapper& provinceMapper)
+{
+	auto backupNavalLocation = 0;
+	for (const auto& state: allStates)
+	{
+		if (state.second.getOwner() == tag)
+		{
+			auto mainNavalLocation = state.second.getMainNavalLocation();
+			if (mainNavalLocation)
+			{
+				// Mapped ships will be placed in a single large fleet
+				backupNavalLocation = *mainNavalLocation;
+			}
+		}
+	}
+
+	theNavies = std::make_unique<Navies>(oldArmies,
+		 backupNavalLocation,
+		 unitMap,
+		 mtgUnitMap,
+		 *theShipVariants,
+		 provinceToStateIDMap,
+		 allStates,
+		 tag,
+		 provinceDefinitions,
+		 provinceMapper);
+        	navyNames.addLegacyShipTypeNames(LegacyShipTypeNames{"submarine", "Submarine", getShipNames("frigate")});
+	navyNames.addLegacyShipTypeNames(LegacyShipTypeNames{"carrier", "Carrier", getShipNames("monitor")});
+	navyNames.addLegacyShipTypeNames(LegacyShipTypeNames{"battleship", "Battleship", getShipNames("dreadnought")});
+	navyNames.addLegacyShipTypeNames(LegacyShipTypeNames{"battle_cruiser", "Battlecruiser", getShipNames("ironclad")});
+	navyNames.addLegacyShipTypeNames(LegacyShipTypeNames{"heavy_cruiser", "Heavy Cruiser", getShipNames("manowar")});
+	navyNames.addLegacyShipTypeNames(LegacyShipTypeNames{"destroyer", "Destroyer", getShipNames("cruiser")});
+	navyNames.addLegacyShipTypeNames(
+		 LegacyShipTypeNames{"light_cruiser", "Light Cruiser", getShipNames("commerce_raider")});
+
+	navyNames.addMtgShipTypeNames(MtgShipTypeNames{tag + "_DD_HISTORICAL",
+		 "NAME_THEME_HISTORICAL_DESTROYERS",
+		 std::set<std::string>{"ship_hull_light destroyer"},
+		 "Destroyer DD-%d",
+		 getShipNames("cruiser")});
+	navyNames.addMtgShipTypeNames(MtgShipTypeNames{tag + "_DE_HISTORICAL",
+		 "NAME_THEME_HISTORICAL_DE",
+		 std::set<std::string>{"ship_hull_light destroyer"},
+		 "Destroyer Escort DE-%d",
+		 getShipNames("cruiser")});
+	navyNames.addMtgShipTypeNames(MtgShipTypeNames{tag + "_CL_HISTORICAL",
+		 "NAME_THEME_HISTORICAL_CL",
+		 std::set<std::string>{"ship_hull_cruiser light_cruiser"},
+		 "Light Cruiser CL-%d",
+		 getShipNames("commerce_raider")});
+	navyNames.addMtgShipTypeNames(MtgShipTypeNames{tag + "_CL_HISTORICAL",
+		 "NAME_THEME_HISTORICAL_CL",
+		 std::set<std::string>{"ship_hull_cruiser light_cruiser"},
+		 "Light Cruiser CL-%d",
+		 getShipNames("commerce_raider")});
+	navyNames.addMtgShipTypeNames(MtgShipTypeNames{tag + "_CA_HISTORICAL",
+		 "NAME_THEME_HISTORICAL_CA",
+		 std::set<std::string>{"ship_hull_cruiser heavy_cruiser"},
+		 "Heavy Cruiser CA-%d",
+		 getShipNames("manowar")});
+	navyNames.addMtgShipTypeNames(MtgShipTypeNames{tag + "_CLAA_HISTORICAL",
+		 "NAME_THEME_HISTORICAL_CLAA",
+		 std::set<std::string>{"ship_hull_cruiser light_cruiser"},
+		 "Light Cruiser CLAA-%d",
+		 getShipNames("commerce_raider")});
+	navyNames.addMtgShipTypeNames(MtgShipTypeNames{tag + "_MINELAYERS_HISTORICAL",
+		 "NAME_THEME_HISTORICAL_MINELAYERS",
+		 std::set<std::string>{"ship_hull_cruiser light_cruiser", "ship_hull_light destroyer"},
+		 "Minelayer CM-%d",
+		 getShipNames("commerce_raider")});
+	navyNames.addMtgShipTypeNames(MtgShipTypeNames{tag + "_BB_HISTORICAL",
+		 "NAME_THEME_HISTORICAL_BB",
+		 std::set<std::string>{"ship_hull_heavy battleship"},
+		 "Battleship BB-%d",
+		 getShipNames("dreadnought")});
+	navyNames.addMtgShipTypeNames(MtgShipTypeNames{tag + "_BC_HISTORICAL",
+		 "NAME_THEME_HISTORICAL_BC",
+		 std::set<std::string>{"ship_hull_heavy battle_cruiser"},
+		 "Battlecruiser BC-%d",
+		 getShipNames("ironclad")});
+	navyNames.addMtgShipTypeNames(MtgShipTypeNames{tag + "_CV_HISTORICAL",
+		 "NAME_THEME_HISTORICAL_CARRIERS",
+		 std::set<std::string>{"ship_hull_carrier carrier"},
+		 "Carrier CV-%d",
+		 getShipNames("monitor")});
+	navyNames.addMtgShipTypeNames(MtgShipTypeNames{tag + "_CVL_HISTORICAL",
+		 "NAME_THEME_HISTORICAL_CVL",
+		 std::set<std::string>{"ship_hull_carrier carrier"},
+		 "Carrier CVL-%d",
+		 getShipNames("monitor")});
+	navyNames.addMtgShipTypeNames(MtgShipTypeNames{tag + "_SS_HISTORICAL",
+		 "NAME_THEME_HISTORICAL_SUBMARINES",
+		 std::set<std::string>{"ship_hull_submarine submarine"},
+		 "Submarine SS-%d",
+		 getShipNames("frigate")});
+
 }
 
 

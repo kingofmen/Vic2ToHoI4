@@ -1,5 +1,37 @@
 mtg_ship_type = {
 	required_techs = {
+		early_ship_hull_carrier
+	}
+	blocking_techs = {
+		basic_ship_hull_carrier
+	}
+	name = "Early Carrier"
+	type = ship_hull_carrier_conversion_bb
+	name_group = CVL_HISTORICAL
+	modules = {
+			fixed_ship_deck_slot_1 = ship_deck_space
+			fixed_ship_deck_slot_2 = ship_deck_space
+			fixed_ship_engine_slot = carrier_ship_engine_1
+	}
+	obsolete = no
+}
+mtg_ship_type = {
+	required_techs = {
+		basic_ship_hull_carrier
+	}
+	name = "1936 Carrier"
+	type = ship_hull_carrier_1
+	name_group = CV_HISTORICAL
+	modules = {
+			fixed_ship_deck_slot_1 = ship_deck_space
+			fixed_ship_deck_slot_2 = ship_deck_space
+			fixed_ship_engine_slot = carrier_ship_engine_2
+	}
+	obsolete = no
+}
+
+mtg_ship_type = {
+	required_techs = {
 		early_ship_hull_submarine
 	}
 	blocking_techs = {

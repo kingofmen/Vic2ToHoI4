@@ -103,7 +103,7 @@ HoI4::World::World(const Vic2::World* _sourceWorld,
 
 	scriptedEffects = std::make_unique<ScriptedEffects>(theConfiguration.getHoI4Path());
 	scriptedLocalisations = ScriptedLocalisations::Factory{}.getScriptedLocalisations();
-	setupNavalTreaty();
+	//setupNavalTreaty();
 
 	importLeaderTraits();
 	convertGovernments(vic2Localisations, theConfiguration.getDebug());
@@ -642,10 +642,16 @@ void HoI4::World::convertMilitaries(const ProvinceDefinitions& provinceDefinitio
 		 theMilitaryMappings->getMilitaryMappings(theConfiguration.getVic2Mods());
 
 	convertArmies(specificMappings, provinceMapper, theConfiguration);
+        komConvertNavies(specificMappings.getUnitMappings(),
+		 specificMappings.getMtgUnitMappings(),
+		 provinceDefinitions,
+		 provinceMapper);
+        /*
 	convertNavies(specificMappings.getUnitMappings(),
 		 specificMappings.getMtgUnitMappings(),
 		 provinceDefinitions,
 		 provinceMapper);
+        */
 	convertAirforces(specificMappings.getUnitMappings());
 }
 
@@ -666,6 +672,193 @@ void HoI4::World::convertArmies(const militaryMappings& localMilitaryMappings,
 	}
 }
 
+void HoI4::World::komConvertNavies(
+    const UnitMappings& unitMap, const MtgUnitMappings& mtgUnitMap,
+    const ProvinceDefinitions& provinceDefinitions,
+    const mappers::ProvinceMapper& provinceMapper)
+{
+        Log(LogLevel::Info) << "\t\tConverting navies (KoM style)";
+
+	ifstream variantsFile("DataFiles/shipTypes.txt");
+	if (!variantsFile.is_open())
+	{
+		std::runtime_error e("Could not open DataFiles/shipTypes.txt. Double-check your converter installation");
+		throw e;
+	}
+	PossibleShipVariants possibleVariants(variantsFile);
+	variantsFile.close();
+
+        struct NavyCustom {
+          int battleships = 0;
+          int carriers = 0;
+          int cruisers = 0;
+          int wolfpacks = 0;
+          int strength = 5;
+          int dockyards = 0;
+
+          bool carrierTech = false;
+          bool battleTech = false;
+          bool cruiserTech = false;
+          bool destroyerTech = false;
+          bool subTech = false;
+        };
+        NavyCustom defaultCustom;
+        std::unordered_map<std::string, NavyCustom> customs = {
+            {"X00", {}}, {"YMN", {}}, {"FLA", {}}, {"X05", {}},
+            {"X01", {}}, {"ENG", {}}, {"X04", {}}, {"EGY", {}},
+            {"X02", {}}, {"GEO", {}}, {"BRT", {}},
+        };
+
+        customs["YMN"].strength = 268;
+        customs["FLA"].strength = 247;
+        customs["X05"].strength = 146;
+        customs["X01"].strength = 143;
+        customs["ENG"].strength = 138;
+        customs["X04"].strength = 117;
+        customs["EGY"].strength = 116;
+        customs["X02"].strength = 96;
+        customs["GEO"].strength = 64;
+        customs["BRT"].strength = 47;
+        customs["X00"].strength = 37;
+
+        customs["X00"].battleships = 1;
+        customs["X00"].carriers = 1;
+        customs["X00"].cruisers = 1;
+        customs["X00"].wolfpacks = 1;
+        customs["YMN"].battleships = 1;
+        customs["YMN"].carriers = 1;
+        customs["YMN"].cruisers = 1;
+        customs["YMN"].wolfpacks = 1;
+        customs["FLA"].battleships = 1;
+        customs["FLA"].carriers = 1;
+        customs["FLA"].cruisers = 1;
+        customs["FLA"].wolfpacks = 1;
+        customs["X05"].battleships = 1;
+        customs["X05"].carriers = 1;
+        customs["X05"].cruisers = 1;
+        customs["X05"].wolfpacks = 1;
+        customs["X01"].battleships = 1;
+        customs["X01"].carriers = 1;
+        customs["X01"].cruisers = 1;
+        customs["X01"].wolfpacks = 1;
+        customs["ENG"].battleships = 1;
+        customs["ENG"].carriers = 1;
+        customs["ENG"].cruisers = 1;
+        customs["ENG"].wolfpacks = 1;
+        customs["X04"].battleships = 1;
+        customs["X04"].carriers = 1;
+        customs["X04"].cruisers = 1;
+        customs["X04"].wolfpacks = 1;
+        customs["EGY"].battleships = 1;
+        customs["EGY"].carriers = 1;
+        customs["EGY"].cruisers = 1;
+        customs["EGY"].wolfpacks = 1;
+        customs["X02"].battleships = 1;
+        customs["X02"].carriers = 1;
+        customs["X02"].cruisers = 1;
+        customs["X02"].wolfpacks = 1;
+        customs["GEO"].battleships = 1;
+        customs["GEO"].carriers = 1;
+        customs["GEO"].cruisers = 1;
+        customs["GEO"].wolfpacks = 1;
+        customs["BRT"].battleships = 1;
+        customs["BRT"].carriers = 1;
+        customs["BRT"].cruisers = 1;
+        customs["BRT"].wolfpacks = 1;
+
+        std::vector<std::string> carrierTechs = {"basic_ship_hull_carrier",
+                                                 "cv_fighter1"};
+        std::vector<std::string> battleTechs = {"basic_ship_hull_heavy",
+                                                "basic_heavy_armor_scheme",
+                                                "early_heavy_armor_scheme"};
+        std::vector<std::string> cruiserTechs = {"basic_ship_hull_cruiser",
+                                                 "basic_cruiser_armor_scheme"};
+        std::vector<std::string> destroyerTechs = {"basic_ship_hull_light",
+                                                   "basic_light_battery",
+                                                   "basic_depth_charges"};
+        std::vector<std::string> subTechs = {"basic_ship_hull_submarine",
+                                             "magnetic_detonator"};
+        auto upgradeTechs = [this](const std::vector<std::string>& techs,
+                                   std::shared_ptr<HoI4::Country> c) {
+                for (const auto& tech : techs)
+                {
+                        if (c->hasTechnology(tech))
+                        {
+                                continue;
+                        }
+                        Log(LogLevel::Info) << "Upgrading " << c->getOldTag()
+                                            << " tech with " << tech;
+                        c->addTech(tech);
+                        return;
+                }
+                Log(LogLevel::Warning)
+                    << "Could not upgrade " << c->getOldTag() << " techs ("
+                    << techs[0] << "), already exist.";
+        };
+
+        for (auto itr : countries)
+	{
+                NavyCustom custom = defaultCustom;
+                auto country = itr.second;
+                const auto& vTag = country->getOldTag();
+                if (customs.find(vTag) != customs.end())
+                {
+                        custom = customs.at(vTag);
+                }
+                if (custom.carrierTech)
+                {
+                        upgradeTechs(carrierTechs, country);
+                }
+                if (custom.battleTech)
+                {
+                        upgradeTechs(battleTechs, country);
+                }
+                if (custom.cruiserTech)
+                {
+                        upgradeTechs(cruiserTechs, country);
+                }
+                if (custom.destroyerTech)
+                {
+                        upgradeTechs(destroyerTechs, country);
+                }
+                if (custom.subTech)
+                {
+                        upgradeTechs(subTechs, country);
+                }
+                country->determineShipVariants(possibleVariants);
+                std::vector<std::string> toBuild;
+                for (int i = 0; i < custom.battleships; ++i) {
+                  toBuild.push_back("dreadnought");
+                }
+                for (int i = 0; i < custom.carriers; ++i) {
+                  toBuild.push_back("battleship");
+                }
+                for (int i = 0; i < custom.cruisers; ++i) {
+                  toBuild.push_back("cruiser");
+                }
+                for (int i = 0; i < custom.wolfpacks; ++i) {
+                  toBuild.push_back("monitor");
+                }
+                int convoys = custom.strength / 10;
+                if (custom.strength % 10 != 0)
+                {
+                        convoys++;
+                }
+                if (convoys < 3)
+                {
+                        convoys = 3;
+                }
+                for (int i = 0; i < convoys; ++i)
+                {
+                        toBuild.push_back("frigate");
+                }
+                country->komvertNavies(toBuild, unitMap, mtgUnitMap,
+			 states->getProvinceToStateIDMap(),
+			 states->getStates(),
+			 provinceDefinitions,
+			 provinceMapper);
+        }
+}
 
 void HoI4::World::convertNavies(const UnitMappings& unitMap,
 	 const MtgUnitMappings& mtgUnitMap,

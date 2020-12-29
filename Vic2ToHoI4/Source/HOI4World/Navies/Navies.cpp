@@ -4,6 +4,87 @@
 #include "Log.h"
 
 
+HoI4::Navies::Navies(const std::vector<std::string>& unitsToCreate,
+	 int backupNavalLocation,
+	 const UnitMappings& unitMap,
+	 const MtgUnitMappings& mtgUnitMap,
+	 const ShipVariants& theShipVariants,
+	 const std::map<int, int>& provinceToStateIDMap,
+	 std::map<int, State> states,
+	 const std::string& tag,
+	 const ProvinceDefinitions& provinceDefinitions,
+	 const mappers::ProvinceMapper& provinceMapper)
+{
+        int navalLocation = backupNavalLocation;
+        int base = backupNavalLocation;
+        LegacyNavy newLegacyNavy("Glorious Navy", navalLocation, base);
+        MtgNavy newMtgNavy("Glorious Navy", navalLocation, base);
+        std::unordered_map<std::string, int> counter;
+        for (const auto& unit : unitsToCreate)
+        {
+                if (unitMap.hasMatchingType(unit))
+                {
+                        for (const auto& unitInfo :
+                             unitMap.getMatchingUnitInfo(unit))
+                        {
+                                if (unitInfo.getCategory() == "naval" &&
+                                    theShipVariants.hasLegacyVariant(
+                                        unitInfo.getVersion()))
+                                {
+                                        LegacyShip newLegacyShip(
+                                            "Ship", unitInfo.getType(),
+                                            unitInfo.getEquipment(), tag);
+                                        newLegacyNavy.addShip(newLegacyShip);
+                                }
+                        }
+                }
+                else
+                {
+                        Log(LogLevel::Warning)
+                            << "Unknown legacy unit type: " << unit;
+                }
+                if (mtgUnitMap.hasMatchingType(unit))
+                {
+                        counter[unit]++;
+                        for (const auto& unitInfo :
+                             mtgUnitMap.getMatchingUnitInfo(unit))
+                        {
+                                if ((unitInfo.getCategory() == "naval") &&
+                                    theShipVariants.hasMtgVariant(
+                                        unitInfo.getVersion()))
+                                {
+                                        for (int i = 0; i < unitInfo.getSize();
+                                             ++i)
+                                        {
+                                                Log(LogLevel::Info)
+                                                    << "  " << unit << " "
+                                                    << counter[unit] << " -> "
+                                                    << unitInfo.getType();
+                                                MtgShip newMtgShip(
+                                                    "Ship", unitInfo.getType(),
+                                                    unitInfo.getEquipment(),
+                                                    tag, unitInfo.getVersion(),
+                                                    0);
+                                                newMtgNavy.addShip(newMtgShip);
+                                        }
+                                }
+                        }
+                }
+                else
+                {
+                        Log(LogLevel::Warning)
+                            << "Unknown mtg unit type: " << unit;
+                }
+        }
+        if (newLegacyNavy.getNumShips() > 0)
+        {
+                legacyNavies.push_back(newLegacyNavy);
+        }
+        if (newMtgNavy.getNumShips() > 0)
+        {
+                mtgNavies.push_back(newMtgNavy);
+        }
+}
 
 HoI4::Navies::Navies(const std::vector<Vic2::Army>& srcArmies,
 	 int backupNavalLocation,

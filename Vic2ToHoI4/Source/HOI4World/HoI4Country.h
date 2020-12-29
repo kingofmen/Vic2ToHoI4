@@ -92,7 +92,14 @@ class Country
 		 const std::map<int, State>& allStates,
 		 const ProvinceDefinitions& provinceDefinitions,
 		 const mappers::ProvinceMapper& provinceMapper);
-	void convertConvoys(const UnitMappings& unitMap);
+        void komvertNavies(const std::vector<std::string>& toBuild,
+                           const UnitMappings& unitMap,
+                           const MtgUnitMappings& mtgUnitMap,
+                           const std::map<int, int>& provinceToStateIDMap,
+                           const std::map<int, State>& allStates,
+                           const ProvinceDefinitions& provinceDefinitions,
+                           const mappers::ProvinceMapper& provinceMapper);
+        void convertConvoys(const UnitMappings& unitMap);
 	void convertAirForce(const UnitMappings& unitMap);
 	void convertArmies(const militaryMappings& theMilitaryMappings,
 		 const HoI4::States& theStates,
@@ -173,6 +180,8 @@ class Country
 		}
 	}
 	[[nodiscard]] const std::optional<technologies>& getTechnologies() const { return theTechnologies; }
+        [[nodiscard]] bool hasTechnology(const std::string& tech) const;
+        [[nodiscard]] void addTech(const std::string& tech);
 	[[nodiscard]] const std::set<std::string>& getIdeas() const { return ideas; }
 	[[nodiscard]] const auto& getFlags() const { return flags; }
 

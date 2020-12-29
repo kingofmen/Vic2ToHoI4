@@ -472,10 +472,6 @@ default = {
 
 	link = {
 		vic = frigate
-	}
-
-	link = {
-		vic = commerce_raider
 		hoi = {
 			category = naval
 			type = destroyer
@@ -493,15 +489,93 @@ default = {
 	}
 
 	link = {
+		vic = commerce_raider
+		hoi = {
+			category = naval
+			type = destroyer
+			equipment = ship_hull_light_1
+			version = "Early Destroyer"
+			size = 5
+		}
+		hoi = {
+			category = naval
+			type = destroyer
+			equipment = ship_hull_light_2
+			version = "1936 Destroyer"
+			size = 5
+		}
+	}
+
+	link = {
 		vic = ironclad
 	}
 
 	link = {
 		vic = monitor
+		hoi = {
+			category = naval
+			type = submarine
+			equipment = ship_hull_submarine_1
+			version = "Early Submarine"
+			size = 5
+		}
+		hoi = {
+			category = naval
+			type = submarine
+			equipment = ship_hull_submarine_2
+			version = "1936 Submarine"
+			size = 5
+		}
 	}
 
 	link = {
 		vic = cruiser
+		hoi = {
+			category = naval
+			type = heavy_cruiser
+			equipment = ship_hull_cruiser_1
+			version = "Early Heavy Cruiser"
+			size = 1
+		}
+		hoi = {
+			category = naval
+			type = heavy_cruiser
+			equipment = ship_hull_cruiser_2
+			version = "1936 Heavy Cruiser"
+			size = 1
+		}
+		hoi = {
+			category = naval
+			type = destroyer
+			equipment = ship_hull_light_1
+			version = "Early Destroyer"
+			size = 3
+		}
+		hoi = {
+			category = naval
+			type = destroyer
+			equipment = ship_hull_light_2
+			version = "1936 Destroyer"
+			size = 3
+		}
+	}
+
+	link = {
+		vic = battleship
+		hoi = {
+			category = naval
+			type = carrier
+			equipment = ship_hull_carrier_conversion_bb
+			version = "Early Carrier"
+			size = 1
+		}
+		hoi = {
+			category = naval
+			type = carrier
+			equipment = ship_hull_carrier_1
+			version = "1936 Carrier"
+			size = 1
+		}
 		hoi = {
 			category = naval
 			type = light_cruiser
@@ -516,23 +590,19 @@ default = {
 			version = "1936 Light Cruiser"
 			size = 1
 		}
-	}
-
-	link = {
-		vic = battleship
 		hoi = {
 			category = naval
-			type = heavy_cruiser
-			equipment = ship_hull_cruiser_1
-			version = "Early Heavy Cruiser"
-			size = 1
+			type = destroyer
+			equipment = ship_hull_light_1
+			version = "Early Destroyer"
+			size = 3
 		}
 		hoi = {
 			category = naval
-			type = heavy_cruiser
-			equipment = ship_hull_cruiser_2
-			version = "1936 Heavy Cruiser"
-			size = 1
+			type = destroyer
+			equipment = ship_hull_light_2
+			version = "1936 Destroyer"
+			size = 3
 		}
 	}
 
@@ -551,6 +621,34 @@ default = {
 			equipment = ship_hull_heavy_2
 			version = "1936 Battleship"
 			size = 1
+		}
+		hoi = {
+			category = naval
+			type = light_cruiser
+			equipment = ship_hull_cruiser_1
+			version = "Early Light Cruiser"
+			size = 1
+		}
+		hoi = {
+			category = naval
+			type = light_cruiser
+			equipment = ship_hull_cruiser_2
+			version = "1936 Light Cruiser"
+			size = 1
+		}
+		hoi = {
+			category = naval
+			type = destroyer
+			equipment = ship_hull_light_1
+			version = "Early Destroyer"
+			size = 3
+		}
+		hoi = {
+			category = naval
+			type = destroyer
+			equipment = ship_hull_light_2
+			version = "1936 Destroyer"
+			size = 3
 		}
 	}
 

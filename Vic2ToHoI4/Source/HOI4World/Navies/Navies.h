@@ -23,6 +23,16 @@ namespace HoI4
 class Navies
 {
   public:
+        Navies(const std::vector<std::string>& toBuild,
+		 int backupNavalLocation,
+		 const UnitMappings& unitMap,
+		 const MtgUnitMappings& mtgUnitMap,
+		 const ShipVariants& theShipVariants,
+		 const std::map<int, int>& provinceToStateIDMap,
+		 std::map<int, State> states,
+		 const std::string& tag,
+		 const ProvinceDefinitions& provinceDefinitions,
+		 const mappers::ProvinceMapper& provinceMapper);
 	Navies(const std::vector<Vic2::Army>& srcArmies,
 		 int backupNavalLocation,
 		 const UnitMappings& unitMap,
