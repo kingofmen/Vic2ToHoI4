@@ -83,6 +83,12 @@ void HoI4::technologies::setResearchBonus(const std::string& tech, int bonus)
 	}
 }
 
+void HoI4::technologies::addTech(const std::string& tech)
+{
+        // Hack alert: Currently only using this for MTG naval techs, ever.
+        mtgNavalTechnologies.insert(tech);
+}
+
 
 bool HoI4::technologies::hasTechnology(const std::string& technology) const
 {

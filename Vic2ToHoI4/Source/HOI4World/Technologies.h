@@ -54,9 +54,9 @@ class technologies
 	}
 
 	bool hasTechnology(const std::string& technology) const;
+        void addTech(const std::string& tech);
 
-
-	[[nodiscard]] const auto& getMainTechnologies() const { return mainTechnologies; }
+        [[nodiscard]] const auto& getMainTechnologies() const { return mainTechnologies; }
 	[[nodiscard]] const auto& getNonMtgNavalTechnologies() const { return nonMtgNavalTechnologies; }
 	[[nodiscard]] const auto& getMtgNavalTechnologies() const { return mtgNavalTechnologies; }
 	[[nodiscard]] const auto& getResearchBonuses() const { return researchBonuses; }
