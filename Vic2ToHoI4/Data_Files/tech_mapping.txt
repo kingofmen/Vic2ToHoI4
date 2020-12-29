@@ -259,7 +259,8 @@ mtg_naval_tech_map =
 
 	link = {
 		vic2 = interwar_carriers
-		hoi4 = basic_ship_hull_cruiser
+		hoi4 = basic_ship_hull_carrier
+		hoi4 = cv_early_fighter
 	}
 
 	# HoI4 Early Submarine Hull/Minelaying Submarine <- Vic2 Tech Navy/Ship Construction/Oil Driven Ships
