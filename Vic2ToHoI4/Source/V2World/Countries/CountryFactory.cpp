@@ -156,6 +156,8 @@ std::unique_ptr<Vic2::Country> Vic2::Country::Factory::createCountry(const std::
 	country->shipNames = commonCountryData.getUnitNames();
 
 	parseStream(theStream);
+        // Override Victoria's prejudices since we had to remove the civilising decision.
+        country->civilized = true;
 	setParties(allParties);
 	limitCommanders();
 
