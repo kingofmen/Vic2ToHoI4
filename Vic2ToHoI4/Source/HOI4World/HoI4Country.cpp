@@ -1013,7 +1013,7 @@ void HoI4::Country::addGenericFocusTree(const std::set<std::string>& majorIdeolo
 
 void HoI4::Country::adjustResearchFocuses() const
 {
-	if (greatPower && nationalFocus)
+	if (nationalFocus)
 	{
 		nationalFocus->removeFocus("extra_tech_slot_2" + tag);
 	}

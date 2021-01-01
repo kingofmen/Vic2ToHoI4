@@ -348,7 +348,7 @@ void outputResearchSlots(std::ostream& output, const bool& greatPower, const boo
 	}
 	else if (civilized)
 	{
-		output << "set_research_slots = 3\n";
+		output << "set_research_slots = 4\n";
 	}
 	else
 	{
